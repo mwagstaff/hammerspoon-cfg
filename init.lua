@@ -79,6 +79,12 @@ hs.hotkey.bind({"ctrl", "cmd"}, "b", function()
     end
 end)
 
+-- Password
+hs.hotkey.bind({"cmd"}, "w", function()
+    hs.eventtap.keyStrokes(Password)
+    hs.eventtap.keyStroke({}, "return")
+end)
+
 -- Login to work
 hs.hotkey.bind({"ctrl", "cmd"}, "l", function()
     local app = hs.application.get("Citrix Viewer")
