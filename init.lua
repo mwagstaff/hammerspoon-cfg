@@ -4,7 +4,7 @@
 
 require "secrets"
 
--- Functions
+-- Helper functions
 
 function BindAppShortcut(keyStroke, appName)
     hs.hotkey.bind({"ctrl", "cmd"}, keyStroke, function()
