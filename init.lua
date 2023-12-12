@@ -18,9 +18,19 @@ function BindCommandShortcut(keyStroke, command)
     end)
 end
 
+function BindPasswordShortcut(passwordIndex)
+    print("Binding password shortcut for: "..passwordIndex)
+    hs.hotkey.bind({"cmd"}, passwordIndex, function()
+        hs.eventtap.keyStrokes(passwordIndex..PasswordSuffix)
+        hs.eventtap.keyStroke({}, "return")
+    end)
+end
+
 function SearchBook(bookName)
     bookName = bookName:gsub(' by ', ' ')
     bookName = bookName:gsub(' %- ', ' ')
+    bookName = bookName:gsub('.', '')
+    bookName = bookName:gsub("'", '')
     local bookReviewSearchUrl = "https://duckduckgo.com/?va=q&t=hd&q=\\"..bookName.."+site%3Agoodreads.com&ia=web"
     local bookDownloadSearchUrl = "https://libgen.is/fiction/?q="..bookName.."&criteria=&language=English&format=epub"
     os.execute("open '"..bookReviewSearchUrl.."'")
@@ -39,7 +49,7 @@ BindAppShortcut("i", "iTerm")
 BindAppShortcut("n", "Notes")
 BindAppShortcut("o", "Microsoft Outlook")
 BindAppShortcut("p", "Spotify")
-BindAppShortcut("r", "Reminders")
+-- BindAppShortcut("r", "Reminders")
 BindAppShortcut("s", "Signal")
 BindAppShortcut("v", "Visual Studio Code")
 BindAppShortcut("w", "WhatsApp")
@@ -80,10 +90,11 @@ hs.hotkey.bind({"ctrl", "cmd"}, "b", function()
 end)
 
 -- Password
-hs.hotkey.bind({"cmd"}, "w", function()
-    hs.eventtap.keyStrokes(Password)
-    hs.eventtap.keyStroke({}, "return")
-end)
+for passwordIndex = 1, 9, 1 do
+    BindPasswordShortcut(tostring(passwordIndex))
+end
+
+-- BindPasswordShortcut("1")
 
 -- Login to work
 hs.hotkey.bind({"ctrl", "cmd"}, "l", function()
@@ -103,4 +114,12 @@ hs.hotkey.bind({"ctrl", "cmd"}, "l", function()
             end)
         end
     end
+end)
+
+-- Reload Hammerspoon config
+hs.hotkey.bind({"cmd", "ctrl"}, "/", function()
+    hs.alert.show("Reloading config...")
+    hs.timer.doAfter(1, function() 
+        hs.reload()
+      end)
 end)
