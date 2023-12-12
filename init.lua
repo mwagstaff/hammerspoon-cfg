@@ -60,11 +60,6 @@ BindCommandShortcut("d", "open ~/Downloads")
 
 -- Other hotkeys
 
--- Reload Hammerspoon config
-hs.hotkey.bind({"ctrl", "cmd"}, "/", function()
-    hs.reload()
-end)
-
 -- Search for highlighted book
 hs.hotkey.bind({"alt", "cmd"}, "b", function()
     -- Backup the existing clipboard
